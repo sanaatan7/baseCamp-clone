@@ -1,0 +1,21 @@
+{
+  "name": "basecamp-clone",
+  "version": "1.0.0",
+  "description": "A project management application",
+  "homepage": "https://github.com/sanaatan7/baseCamp-clone#readme",
+  "bugs": {
+    "url": "https://github.com/sanaatan7/baseCamp-clone/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanaatan7/baseCamp-clone.git"
+  },
+  "license": "ISC",
+  "author": "sanatan",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node index.js"
+  }
+}
