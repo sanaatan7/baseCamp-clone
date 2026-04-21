@@ -1,4 +1,43 @@
 import Mailgen from "mailgen";
+import nodemailer from "nodemailer";
+
+const sendEmail = async (options) => {
+  const mailGenerator = new Mailgen({
+    theme: "default",
+    product: {
+      name: "Task Manager",
+      link: "https://examplelink.com",
+    },
+  });
+
+  const emailTextual = mailGenerator.generatePlaintext(options.mailGenContent);
+  const emailHtml = mailGenerator.generate(options.mailGenContent);
+  const transporter = nodemailer.createTransport({
+    host: process.env.MAILTRAP_SMTP_HOST,
+    port: process.env.MAILTRAP_SMTP_PORT,
+    auth: {
+      user: process.env.MAILTRAP_SMTP_USER,
+      pass: process.env.MAILTRAP_SMTP_PASSWORD,
+    },
+  });
+
+  const email = {
+    from: "email.basecamp@gmail.com",
+    to: options.email,
+    subject: options.subject,
+    text: emailTextual,
+    html: emailHtml,
+  };
+
+  try {
+    await transporter.sendMail(email);
+  } catch (error) {
+    console.error(
+      "mail service disrupted! please check your mailtrap credentials",
+    );
+    console.error("error: ", error);
+  }
+};
 
 const emailVerificicationMailgenContent = (username, verificationUrl) => {
   return {
@@ -38,4 +77,8 @@ const forgotPasswordMailgenContent = (username, passwordResetUrl) => {
   };
 };
 
-export { emailVerificicationMailgenContent, forgotPasswordMailgenContent };
+export {
+  emailVerificicationMailgenContent,
+  forgotPasswordMailgenContent,
+  sendEmail,
+};
